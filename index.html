@@ -1,17 +1,17 @@
 <canvas id=c style="border:9px solid">
 <script>
 
-x=c.getContext("2d"); // canvas ctx
+t=c.getContext("2d"); // canvas ctx
 S=9; // snake length
-h=1; // next horizontal offset
+h= // next horizontal offset
+l=1;  // if 0, lock keys until next frame
 g= // game over
-v= // next vertical offset
-l=0; // lock until next frame
+v=0; // next vertical offset
 s=[]; // snake
 a=[9,9]; // apple
 
 // Init snake
-for(i=20;i>10;i--){
+for(i=9;i--;){
   s.push([i,7]);
 }
 
@@ -53,30 +53,27 @@ for(i=20;i>10;i--){
   // Draw the frame
   c.width|=0;
   for(j in s){
-    x.fillRect(s[j][0]*10,s[j][1]*10,10,10);
+    t.fillRect(s[j][0]*10,s[j][1]*10,10,10);
   }
-  x.fillRect(a[0]*10,a[1]*10,10,10);
+  t.fillRect(a[0]*10,a[1]*10,10,10);
   
   // Unock controls
-  l=0;
+  l=1;
   
   // Next frame
-  if(!g)setTimeout(w,170-S/3);
+  if(!g)setTimeout(w,160-S/3);
 })()
 
 // Keyboard
 onkeyup=function(e){
   k=e.keyCode;
-  if(!l){
-    if(v){
-      h=+(k==39)+(k==37)*-1;
-      if(h)v=0;
+  if(l){
+    if(v && (h=k==39?1:k==37?-1:0)){
+      l=v=0;
     }
-    else if(h){
-      v=+(k==40)+(k==38)*-1;
-      if(v)h=0;
+    else if(h && (v=k==40?1:k==38?-1:0)){
+      l=h=0;
     }
-    l=1;
   }
 }
 </script>
