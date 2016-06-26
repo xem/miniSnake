@@ -1,0 +1,80 @@
+<canvas id=c style="border:1px solid">
+<script>
+
+// Init
+x=c.getContext("2d");
+s=[];
+for(i=20;i>10;i--){
+  s.push([i,7]);
+}
+
+// Draw
+d=function(){
+  c.width|=0;
+  for(j in s){
+    x.fillRect(s[j][0]*10,s[j][1]*10,10,10);
+  }
+  x.fillRect(a[0]*10,a[1]*10,10,10);
+}
+
+// Walk
+g=0; // game over
+
+w=function(){
+  // Walk
+  s.unshift([(s[0][0]+h+30)%30,(s[0][1]+v+15)%15]);
+  
+  // Die
+  for(i in s){
+    if(i>0 && s[0][0]==s[i][0] && s[0][1]==s[i][1]){
+      g=1;
+      alert("GAME OVER! SCORE:" + (s.length-11));
+    }
+  }
+  
+  // Eat
+  if(a[0]==s[0][0] && a[1]==s[0][1]){
+    p();
+  }
+  else{
+    s.pop();
+  }
+  d();
+  l=0;
+  
+  // Next frame
+  if(!g)setTimeout(w,180-s.length/3);
+}
+
+// Keyboard
+h=1; // next horizontal offset
+v=0; // next vertical offset
+l=0; // lock until next frame
+onkeyup=function(e){
+  k=e.keyCode;
+  if(!l){
+    if(v){
+      h=+(k==39)+(k==37)*-1;
+      if(h)v=0;
+    }
+    else if(h){
+      v=+(k==40)+(k==38)*-1;
+      if(v)h=0;
+    }
+    l=1;
+  }
+}
+
+// Place apple
+p=function(){
+  a=[~~(Math.random()*30),~~(Math.random()*15)];
+  for(i in s){
+    if(s[i][0]==a[0] && s[i][1]==a[1]){
+      p();
+    }
+  }
+}
+
+p();
+w();
+</script>
