@@ -1,14 +1,1 @@
-<canvas style="border:9px solid"id=c><script>
-x=c.getContext`2d`;
-x.f=x.fillRect;
-h=1;
-l=v=g=0;
-s=[];
-for(i=20;10<i;i--)s.push([i,7]);
-d=z=>{c.width|=0;for(j in s)x.f(10*s[j][0],10*s[j][1],10,10);x.f(10*a[0],10*a[1],10,10)};
-w=z=>{s.unshift([(s[0][0]+h+30)%30,(s[0][1]+v+15)%15]);for(i in s)if(0<i&&s[0][0]==s[i][0]&&s[0][1]==s[i][1]){g=1;alert("GAME OVER! SCORE:"+(s.length-11))}a[0]==s[0][0]&&a[1]==s[0][1]?p():s.pop();d();l=0;g||setTimeout(w,180-s.length/3)};
-onkeyup=z=>{k=z.keyCode;l||(v?(h=+(39==k)+-1*(37==k))&&(v=0):h&&(v=+(40==k)+-1*(38==k))&&(h=0),l=1)};
-p=z=>{a=[~~(30*Math.random()),~~(15*Math.random())];for(i in s)s[i][0]==a[0]&&s[i][1]==a[1]&&p()};
-p();
-w()
-</script>
+<canvas style="border:9px solid"id=c><svg onload='t=c.getContext`2d`;S=9;h=1;g=v=l=0;s=[];a=[9,9];for(i=20;10<i;i--)s.push([i,7]);(w=b=>{s.unshift([(s[0][0]+h+30)%30,(s[0][1]+v+15)%15]);for(i in s)0<i&&s[0][0]==s[i][0]&&s[0][1]==s[i][1]&&(g=1,alert(S-9));if(a[0]==s[0][0]&&a[1]==s[0][1])for(a=0,S++;!a;)for(i in a=[~~(30*Math.random()),~~(15*Math.random())],s)s[i][0]==a[0]&&s[i][1]==a[1]&&(a=0);else s.pop();c.width|=0;for(j in s)t.fillRect(10*s[j][0],10*s[j][1],10,10);t.fillRect(10*a[0],10*a[1],10,10);l=0;g||setTimeout(w,170-S/3)})();top.onkeyup=b=>{k=b.keyCode;l||(v?(h=+(39==k)+-1*(37==k))&&(v=0):h&&(v=+(40==k)+-1*(38==k))&&(h=0),l=1)}'>

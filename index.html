@@ -1,26 +1,23 @@
-<canvas id=c style="border:1px solid">
+<canvas id=c style="border:9px solid">
 <script>
 
-// Init
-x=c.getContext("2d");
-s=[];
+x=c.getContext("2d"); // canvas ctx
+S=9; // snake length
+h=1; // next horizontal offset
+g= // game over
+v= // next vertical offset
+l=0; // lock until next frame
+s=[]; // snake
+a=[9,9]; // apple
+
+// Init snake
 for(i=20;i>10;i--){
   s.push([i,7]);
 }
 
-// Draw
-d=function(){
-  c.width|=0;
-  for(j in s){
-    x.fillRect(s[j][0]*10,s[j][1]*10,10,10);
-  }
-  x.fillRect(a[0]*10,a[1]*10,10,10);
-}
+// Move
+(w=function(){
 
-// Walk
-g=0; // game over
-
-w=function(){
   // Walk
   s.unshift([(s[0][0]+h+30)%30,(s[0][1]+v+15)%15]);
   
@@ -28,28 +25,46 @@ w=function(){
   for(i in s){
     if(i>0 && s[0][0]==s[i][0] && s[0][1]==s[i][1]){
       g=1;
-      alert("GAME OVER! SCORE:" + (s.length-11));
+      alert(S-9);
     }
   }
   
-  // Eat
+  // Eat (get longer)
   if(a[0]==s[0][0] && a[1]==s[0][1]){
-    p();
+    a=0;
+    S++;
+    
+    // New apple
+    while(!a){
+      a=[~~(Math.random()*30),~~(Math.random()*15)];
+      for(i in s){
+        if(s[i][0]==a[0] && s[i][1]==a[1]){
+          a=0;
+        }
+      }
+    }
   }
+  
+  // Or do not get longer 
   else{
     s.pop();
   }
-  d();
+  
+  // Draw the frame
+  c.width|=0;
+  for(j in s){
+    x.fillRect(s[j][0]*10,s[j][1]*10,10,10);
+  }
+  x.fillRect(a[0]*10,a[1]*10,10,10);
+  
+  // Unock controls
   l=0;
   
   // Next frame
-  if(!g)setTimeout(w,180-s.length/3);
-}
+  if(!g)setTimeout(w,170-S/3);
+})()
 
 // Keyboard
-h=1; // next horizontal offset
-v=0; // next vertical offset
-l=0; // lock until next frame
 onkeyup=function(e){
   k=e.keyCode;
   if(!l){
@@ -64,17 +79,4 @@ onkeyup=function(e){
     l=1;
   }
 }
-
-// Place apple
-p=function(){
-  a=[~~(Math.random()*30),~~(Math.random()*15)];
-  for(i in s){
-    if(s[i][0]==a[0] && s[i][1]==a[1]){
-      p();
-    }
-  }
-}
-
-p();
-w();
 </script>
